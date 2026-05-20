@@ -118,6 +118,7 @@ const PROJECTS = [
     id: "cctv",
     name: "AI-Powered CCTV Event Detection",
     sub: "Production // NXON AI",
+    github: null, // proprietary / NDA — no public repo
     tags: ["FLAGSHIP", "ON-DEVICE", "MULTI-CAMERA"],
     desc: "End-to-end surveillance intelligence detecting 15+ event types across simultaneous live CCTV feeds. Models deployed fully on-chip across three NPU SoC families.",
     bullets: [
@@ -138,6 +139,7 @@ const PROJECTS = [
     id: "deeplense",
     name: "Deeplense — Semantic Image Search",
     sub: "Personal // Production-ready",
+    github: "https://github.com/FENILPATEL-05/deeplense-ai---Shows-it-s-an-AI-powered-project",
     tags: ["VECTOR DB", "CLIP", "HYBRID RANK"],
     desc: "Natural-language image retrieval engine fusing CLIP embeddings, BM25 keyword scoring and metadata boosting for 40–60% accuracy gain over keyword-only search.",
     bullets: [
@@ -158,6 +160,7 @@ const PROJECTS = [
     id: "nars",
     name: "Human Decision Simulator",
     sub: "Research // NARS Cognitive Agent",
+    github: "https://github.com/FENILPATEL-05/human-decision-simulator",
     tags: ["COGNITIVE", "REASONING"],
     desc: "Cognitive simulation engine using a Non-Axiomatic Reasoning System for bounded-rationality multi-goal arbitration with multi-hop deductive inference.",
     bullets: [
@@ -177,6 +180,7 @@ const PROJECTS = [
     id: "poliscan",
     name: "POLISCAN — Election Analytics",
     sub: "Data Engineering",
+    github: "https://github.com/FENILPATEL-05/POLISCAN",
     tags: ["BIG DATA", "ETL"],
     desc: "U.S. election financial-contribution analytics — integrating individuals, candidates and committees to surface donor behavior, party comparisons and regional patterns.",
     bullets: [
@@ -191,6 +195,27 @@ const PROJECTS = [
       { lbl: "Pipeline",   val: "ETL", unit: "" },
     ],
     tech: ["AWS", "Python", "Pandas", "Power BI", "Jira"]
+  },
+  {
+    id: "yoga",
+    name: "Yoga Pose Detection",
+    sub: "Personal // Computer Vision",
+    github: "https://github.com/FENILPATEL-05/Yoga-Pose-Detection",
+    tags: ["CUSTOM CNN", "8 ASANAS", "WEB UI"],
+    desc: "AI-powered yoga pose classifier identifying 8 fundamental asanas in real-time using a custom CNN trained from scratch, with a softmax confidence distribution and an interactive web interface.",
+    bullets: [
+      "Custom CNN architecture trained from scratch — classifies 8 asanas: Downward Dog, Warrior I & II, Tree, Cobra, Child's Pose, Staff, Low Plank",
+      "Softmax probability output for per-class confidence scoring across all pose categories",
+      "Pre-trained .pth weights shipped for instant inference without re-training",
+      "Interactive web UI (yogalens.html) + REST API endpoint via Jupyter notebook",
+    ],
+    metrics: [
+      { lbl: "Asana classes",  val: "8",      unit: "" },
+      { lbl: "Architecture",   val: "CNN",     unit: "" },
+      { lbl: "Framework",      val: "PyTorch", unit: "" },
+      { lbl: "Interface",      val: "Web",     unit: "+" },
+    ],
+    tech: ["PyTorch", "Python", "CNN", "Jupyter", "HTML"]
   },
 ];
 
@@ -253,10 +278,11 @@ const LANG_USAGE = [
 ];
 
 const REPO_HIGHLIGHTS = [
-  { n: "edge-inference-suite", desc: "INT8/INT16 quantization helpers for NPU targets", lang: "C++", stars: 24 },
-  { n: "yolo-cctv-events",     desc: "Multi-camera event detection — line crossing, intrusion, ALPR", lang: "Python", stars: 41 },
-  { n: "deeplense",            desc: "Hybrid CLIP + BM25 semantic image search", lang: "Python", stars: 17 },
-  { n: "nars-decision-agent",  desc: "Bounded-rationality cognitive simulator", lang: "Python", stars: 9 },
+  { n: "deeplense-ai", url: "https://github.com/FENILPATEL-05/deeplense-ai---Shows-it-s-an-AI-powered-project", desc: "Hybrid CLIP + BM25 semantic image search", lang: "Python" },
+  { n: "human-decision-simulator", url: "https://github.com/FENILPATEL-05/human-decision-simulator", desc: "Bounded-rationality cognitive simulator (NARS)", lang: "Python" },
+  { n: "Yoga-Pose-Detection", url: "https://github.com/FENILPATEL-05/Yoga-Pose-Detection", desc: "Custom CNN classifying 8 yoga asanas with softmax confidence scoring and web UI", lang: "Python" },
+  { n: "Workday-Punch-Automation", url: "https://github.com/FENILPATEL-05/Workday-Punch-Automation-Agent", desc: "Playwright + Telegram automation agent for Workday punch scheduling", lang: "Python" },
+  { n: "POLISCAN", url: "https://github.com/FENILPATEL-05/POLISCAN", desc: "U.S. election financial-contribution analytics — donor behavior, party comparisons, regional patterns", lang: "Python" },
 ];
 
 // Make available to the next babel script

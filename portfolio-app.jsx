@@ -59,11 +59,12 @@ function Hero3D({ accent, shape }) {
     let mesh = new THREE.Mesh(geo, innerMat);
     scene.add(mesh);
 
-    // Wireframe overlay (the orange one!)
-    const wireMat = new THREE.LineBasicMaterial({
-      color: accent, transparent: true, opacity: 0.9,
+    // Wireframe overlay — shares the same geometry as mesh so no per-frame rebuild is needed.
+    // MeshBasicMaterial+wireframe is much cheaper than recreating WireframeGeometry every tick.
+    const wireMat = new THREE.MeshBasicMaterial({
+      color: accent, transparent: true, opacity: 0.9, wireframe: true,
     });
-    let wire = new THREE.LineSegments(new THREE.WireframeGeometry(geo), wireMat);
+    let wire = new THREE.Mesh(geo, wireMat);
     scene.add(wire);
 
     // Outer halo wireframe
@@ -123,14 +124,13 @@ function Hero3D({ accent, shape }) {
     function ensureShape(target) {
       if (target === currentShape) return;
       currentShape = target;
-      mesh.geometry.dispose();
-      wire.geometry.dispose();
+      mesh.geometry.dispose(); // wire shares the same ref, no need to dispose separately
       let next;
       if (target === 'knot') next = buildKnotGeometry();
       else if (target === 'torus') next = buildTorusGeometry();
       else next = buildBlobGeometry();
       mesh.geometry = next;
-      wire.geometry = new THREE.WireframeGeometry(next);
+      wire.geometry = next; // share same geometry — no WireframeGeometry wrapper needed
     }
 
     /* === Animation === */
@@ -154,9 +154,7 @@ function Hero3D({ accent, shape }) {
         }
         pos.needsUpdate = true;
         mesh.geometry.computeVertexNormals();
-        // Update wireframe to match
-        wire.geometry.dispose();
-        wire.geometry = new THREE.WireframeGeometry(mesh.geometry);
+        // wire shares the same geometry, so it automatically picks up the updated positions
       }
 
       mesh.rotation.y = t * 0.4 + mouse.x * 0.3;
@@ -180,7 +178,7 @@ function Hero3D({ accent, shape }) {
       window.removeEventListener('mousemove', onMove);
       ro.disconnect();
       renderer.dispose();
-      mesh.geometry.dispose(); wire.geometry.dispose();
+      mesh.geometry.dispose(); // wire.geometry is the same ref, already disposed
       haloGeo.dispose(); pGeo.dispose();
       innerMat.dispose(); wireMat.dispose(); haloMat.dispose(); pMat.dispose();
       if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
@@ -194,6 +192,26 @@ function Hero3D({ accent, shape }) {
    NAV
    ============================================================ */
 function Nav() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setMobileOpen(false); };
+    const onResize = () => { if (window.innerWidth > 820) setMobileOpen(false); };
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
+
+  const close = () => setMobileOpen(false);
+
   return (
     <nav className="nav">
       <a href="#top" className="nav-brand" data-cursor="hover">
@@ -207,9 +225,28 @@ function Nav() {
         <a href="#experience">Path</a>
         <a href="#contact">Contact</a>
       </div>
-      <a href="#contact" className="nav-cta" data-cursor="hover">
-        Available for hire
-      </a>
+      <div className="nav-right">
+        <a href="#contact" className="nav-cta" data-cursor="hover">
+          Available for hire
+        </a>
+        <button className="nav-hamburger" aria-label="Open navigation"
+                aria-expanded={mobileOpen} onClick={() => setMobileOpen(true)}>
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      {mobileOpen && (
+        <div className="mobile-menu" onClick={close}>
+          <div className="mobile-menu-inner" onClick={e => e.stopPropagation()}>
+            <button className="mobile-menu-close" onClick={close} aria-label="Close navigation">✕</button>
+            <a href="#work" onClick={close}>Work</a>
+            <a href="#about" onClick={close}>About</a>
+            <a href="#skills" onClick={close}>Skills</a>
+            <a href="#experience" onClick={close}>Path</a>
+            <a href="#contact" onClick={close}>Contact</a>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
@@ -358,28 +395,39 @@ function Work() {
         </p>
 
         <div className="proj-list">
-          {PROJECTS.map((p, i) => (
-            <div className="proj-item reveal" key={p.id}>
-              <div className="proj-head">
-                <div className="proj-num">{String(i + 1).padStart(2, '0')}/</div>
-                <h3 className="proj-name">{p.name}</h3>
-                <div className="proj-meta">
-                  <b>{p.metrics[0].val}{p.metrics[0].unit}</b>
-                  {p.metrics[0].lbl}
+          {PROJECTS.map((p, i) => {
+            const Tag = p.github ? 'a' : 'div';
+            const linkProps = p.github ? {
+              href: p.github,
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            } : {};
+            return (
+              <Tag key={p.id} {...linkProps} className="proj-item reveal">
+                <div className="proj-head">
+                  <div className="proj-num">{String(i + 1).padStart(2, '0')}/</div>
+                  <h3 className="proj-name">{p.name}</h3>
+                  <div className="proj-meta">
+                    <b>{p.metrics[0].val}{p.metrics[0].unit}</b>
+                    {p.metrics[0].lbl}
+                  </div>
+                  <div className="proj-arrow">↗</div>
                 </div>
-                <div className="proj-arrow">↗</div>
-              </div>
-              <div className="proj-preview" data-name={p.sub}></div>
-              <div className="proj-tags">
-                {p.tags.map((t, j) => (
-                  <span key={t} className={`proj-tag ${j === 0 ? 'accent' : ''}`}>{t}</span>
-                ))}
-                {p.tech.slice(0, 4).map(t => (
-                  <span key={t} className="proj-tag">{t}</span>
-                ))}
-              </div>
-            </div>
-          ))}
+                <div className="proj-preview" data-name={p.sub}></div>
+                <div className="proj-tags">
+                  {p.tags.map((t, j) => (
+                    <span key={t} className={`proj-tag ${j === 0 ? 'accent' : ''}`}>{t}</span>
+                  ))}
+                  {p.tech.slice(0, 4).map(t => (
+                    <span key={t} className="proj-tag">{t}</span>
+                  ))}
+                  {p.github && (
+                    <span className="proj-tag proj-tag-github">GitHub ↗</span>
+                  )}
+                </div>
+              </Tag>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -462,10 +510,10 @@ function Contact() {
     <section className="contact anchor" id="contact">
       <div className="container">
         <div className="sec-label reveal">Get in touch</div>
-        <h1 className="contact-headline reveal">
+        <h2 className="contact-headline reveal">
           Let's build<br/>
           something <em>intelligent.</em>
-        </h1>
+        </h2>
 
         <div className="contact-grid">
           <div className="reveal">
