@@ -213,27 +213,29 @@ function Nav() {
   const close = () => setMobileOpen(false);
 
   return (
-    <nav className="nav">
-      <a href="#top" className="nav-brand" data-cursor="hover">
-        <span className="nav-brand-mark"></span>
-        Fenil Patel
-      </a>
-      <div className="nav-links">
-        <a href="#work">Work</a>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#experience">Path</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div className="nav-right">
-        <a href="#contact" className="nav-cta" data-cursor="hover">
-          Available for hire
+    <>
+      <nav className="nav">
+        <a href="#top" className="nav-brand" data-cursor="hover">
+          <span className="nav-brand-mark"></span>
+          Fenil Patel
         </a>
-        <button className="nav-hamburger" aria-label="Open navigation"
-                aria-expanded={mobileOpen} onClick={() => setMobileOpen(true)}>
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+        <div className="nav-links">
+          <a href="#work">Work</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#experience">Path</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div className="nav-right">
+          <a href="#contact" className="nav-cta" data-cursor="hover">
+            Available for hire
+          </a>
+          <button className="nav-hamburger" aria-label="Open navigation"
+                  aria-expanded={mobileOpen} onClick={() => setMobileOpen(true)}>
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
 
       {mobileOpen && (
         <div className="mobile-menu" onClick={close}>
@@ -247,7 +249,7 @@ function Nav() {
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }
 
