@@ -502,7 +502,7 @@ function Contact() {
                 <a href={`tel:${PROFILE.phone.replace(/\s/g,'')}`} data-cursor="hover">
                   Phone<span className="arrow">↗</span>
                 </a>
-                <a href="#" onClick={(e)=>{e.preventDefault();alert('Resume download wired in production.');}} data-cursor="hover">
+                <a href="./Fenil_Patel_Resume.pdf" download="Fenil_Patel_Resume.pdf" data-cursor="hover">
                   Resume.pdf<span className="arrow">↓</span>
                 </a>
               </div>

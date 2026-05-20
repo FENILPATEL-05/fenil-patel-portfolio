@@ -20,7 +20,7 @@ Edge AI engineer portfolio built with React + Three.js, showcasing embedded ML, 
 
 ## Contact
 - GitHub: https://github.com/FENILPATEL-05
-- LinkedIn: add your LinkedIn URL here
+- LinkedIn: https://www.linkedin.com/in/fenil-patel-32310b2a9
 
 ## License
 Copyright © 2026 Fenil Patel.
