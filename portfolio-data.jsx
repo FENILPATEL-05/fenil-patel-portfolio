@@ -8,7 +8,7 @@ const PROFILE = {
   email: "fenilpatel5211@gmail.com",
   phone: "+91 92651 20982",
   github: "github.com/FENILPATEL-05",
-  linkedin: "linkedin.com/in/fenil-patel",
+  linkedin: "www.linkedin.com/in/fenil-patel-32310b2a9",
 
   taglines: [
     "Building intelligent systems at the edge.",
