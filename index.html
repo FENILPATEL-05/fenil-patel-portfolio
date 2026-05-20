@@ -275,6 +275,10 @@
     border: 1px solid var(--line-strong);
     border-radius: 999px;
     background: rgba(245, 239, 230, 0.02);
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .hero-eyebrow .dot {
     width: 8px; height: 8px; border-radius: 50%;
@@ -548,6 +552,10 @@
     padding-top: 40px;
     border-top: 1px solid var(--line);
   }
+  @media (max-width: 600px) {
+    .about-stats { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .about-stat-val { font-size: 40px; }
+  }
   .about-stat-val {
     font-family: var(--display);
     font-size: 56px;
@@ -793,6 +801,7 @@
     padding: 140px 0;
     position: relative;
   }
+  @media (max-width: 700px) { .contact { padding: 80px 0; } }
   .contact-grid {
     display: grid;
     grid-template-columns: 1.4fr 1fr;
@@ -1081,7 +1090,8 @@ window.addEventListener('scroll', () => {
   const el = document.getElementById('scroll-prog');
   if (!el) return;
   const h = document.documentElement;
-  const p = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  const scrollY = window.pageYOffset || h.scrollTop;
+  const p = (scrollY / (h.scrollHeight - h.clientHeight)) * 100;
   el.style.width = p + '%';
 });
 
