@@ -5,8 +5,7 @@ const { useState, useEffect, useRef, useMemo } = React;
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "accent": "#ff5c2b",
   "show3D": true,
-  "shape": "blob",
-  "darkMode": true
+  "shape": "blob"
 }/*EDITMODE-END*/;
 
 /* ============================================================
@@ -387,7 +386,7 @@ function Work() {
   return (
     <section className="section anchor" id="work">
       <div className="container">
-        <div className="sec-label reveal">Selected work — 2023 / 2026</div>
+        <div className="sec-label reveal">Selected work — 2024 / 2026</div>
         <h2 className="sec-title reveal">
           Systems shipped <em>in the field</em>.
         </h2>
@@ -490,7 +489,7 @@ function Experience() {
                   <p style={{margin:0}}>{t.items[0]}</p>
                   {t.items.length > 1 && (
                     <ul>
-                      {t.items.slice(1, 3).map((b, j) => <li key={j}>{b}</li>)}
+                      {t.items.slice(1).map((b, j) => <li key={j}>{b}</li>)}
                     </ul>
                   )}
                 </div>

@@ -18,9 +18,12 @@
 <meta property="og:title" content="Fenil Patel — Edge AI Engineer">
 <meta property="og:description" content="Edge AI Engineer building real-time computer-vision systems on NPU-class silicon. Sub-100ms inference, on-device.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://fenilpatel.dev/">
+<meta property="og:image" content="https://fenilpatel.dev/og-preview.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Fenil Patel — Edge AI Engineer">
 <meta name="twitter:description" content="Edge AI Engineer building real-time computer-vision systems on NPU-class silicon.">
+<meta name="twitter:image" content="https://fenilpatel.dev/og-preview.png">
 
 <style>
   :root {
@@ -499,7 +502,7 @@
     border: 1px solid var(--line);
   }
   .about-portrait::after {
-    content: "PORTRAIT // 4:3";
+    content: "PORTRAIT // 3:4";
     position: absolute;
     bottom: 18px; left: 18px;
     font-family: var(--mono);
@@ -1054,12 +1057,10 @@
   </div>
 </noscript>
 
-<!-- NOTE for production: switch to react.production.min.js / react-dom.production.min.js
-     and update integrity hashes accordingly for significantly smaller bundle size. -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
 
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel" src="portfolio-data.jsx"></script>
@@ -1093,7 +1094,7 @@ window.addEventListener('scroll', () => {
   const el = document.getElementById('scroll-prog');
   if (!el) return;
   const h = document.documentElement;
-  const scrollY = window.pageYOffset || h.scrollTop;
+  const scrollY = window.scrollY ?? h.scrollTop;
   const p = (scrollY / (h.scrollHeight - h.clientHeight)) * 100;
   el.style.width = p + '%';
 });
