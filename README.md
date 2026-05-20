@@ -1,6 +1,6 @@
 # Fenil Patel Portfolio
 
-Static portfolio built with React, Three.js, and browser-side JSX via Babel.
+Edge AI engineer portfolio built with React + Three.js, showcasing embedded ML, real-time vision, and creative dev work.
 
 ## Files
 - `index.html` — main entry point
@@ -26,3 +26,4 @@ Static portfolio built with React, Three.js, and browser-side JSX via Babel.
 Copyright © 2026 Fenil Patel.
 
 All rights reserved. No part of this repository may be copied, distributed, modified, or used without prior written permission from the copyright holder.
+
